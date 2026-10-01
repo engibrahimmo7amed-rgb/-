@@ -423,11 +423,15 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
 .landing-logo{display:flex;align-items:center;gap:12px;color:#fff;font-size:18px;font-weight:bold;white-space:nowrap}
 .landing-icon-button{width:54px;height:54px;flex:0 0 54px;padding:0;border:2px solid #fff;border-radius:50%;overflow:hidden;background:#fff;box-shadow:none}
 .landing-icon-button:hover{transform:scale(1.06);box-shadow:0 4px 14px #003b3f45}
+.landing-icon-button.landing-icon-fallback{display:grid;place-items:center;color:#00a0be;font-size:20px;font-weight:700;line-height:1}
+.landing-icon-button.landing-icon-fallback:after{content:"تم"}
 .landing-logo-mark{display:block;width:100%;height:100%;object-fit:cover;object-position:center 18%;border-radius:50%}
 .profile-image-modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:24px;background:#071a1dcc;backdrop-filter:blur(4px)}
 .profile-image-modal.visible{display:flex}
 .profile-image-dialog{position:relative;max-width:min(90vw,720px);max-height:90vh;padding:10px;background:#fff;border-radius:14px;box-shadow:0 20px 70px #0006}
 .profile-image-dialog img{display:block;max-width:100%;max-height:calc(90vh - 20px);object-fit:contain;border-radius:8px}
+.profile-image-fallback{width:min(70vw,560px);aspect-ratio:1;display:grid;place-items:center;border-radius:8px;background:#e6f7f8;color:#00a0be;font-size:64px;font-weight:700}
+.profile-image-fallback.hidden{display:none}
 .profile-image-close{position:absolute;top:14px;left:14px;width:42px;height:42px;padding:0;border:1px solid #ffffff75;border-radius:50%;background:#10272bd9;color:#fff;font-size:27px;line-height:1}
 .profile-image-close:hover{background:#079da3}
 .landing-links{display:flex;align-items:center;gap:0;flex-wrap:wrap}
@@ -467,9 +471,60 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
   .landing-copy{justify-self:stretch;font-size:18px}
   .landing-footer{gap:10px 16px;font-size:10px}
 }
+html[data-theme="dark"]{color-scheme:dark;--tam-ink:#e5eff1;--tam-muted:#a4b8bc;--tam-line:#33474c;--tam-surface:#1d2b30;--tam-bg:#142126;--tam-shadow:0 12px 34px #00000030}
+html[data-theme="dark"] body,html[data-theme="dark"] .main-content,html[data-theme="dark"] .landing-page,html[data-theme="dark"] .auth-page{background-color:var(--tam-bg)!important;color:var(--tam-ink)}
+html[data-theme="dark"] .app-topbar,html[data-theme="dark"] .header-steps,html[data-theme="dark"] .container,html[data-theme="dark"] .section,html[data-theme="dark"] .footer,html[data-theme="dark"] .buttons,html[data-theme="dark"] .contract-summary,html[data-theme="dark"] .contract-details,html[data-theme="dark"] .contract-upload,html[data-theme="dark"] .agreement,html[data-theme="dark"] .history-filters,html[data-theme="dark"] .history-details,html[data-theme="dark"] .history-table-wrap,html[data-theme="dark"] .inquiry-panel,html[data-theme="dark"] .inquiry-result,html[data-theme="dark"] .vehicle-dialog,html[data-theme="dark"] .auth-card,html[data-theme="dark"] .landing-brandline,html[data-theme="dark"] .landing-footer{background-color:#1d2b30!important;color:var(--tam-ink);border-color:#33474c}
+html[data-theme="dark"] .section{background-color:#1d2b30!important}
+html[data-theme="dark"] .main-content:before{opacity:.2}
+html[data-theme="dark"] .main-content:after{color:#55c7d6;opacity:.04}
+html[data-theme="dark"] .topbar-title strong,html[data-theme="dark"] .page-title,html[data-theme="dark"] .section-title,html[data-theme="dark"] .contract-summary h2,html[data-theme="dark"] .history-header h1,html[data-theme="dark"] .history-details h2,html[data-theme="dark"] .inquiry-heading h1,html[data-theme="dark"] .vehicle-dialog-header h2,html[data-theme="dark"] .auth-card h1{color:#e5eff1}
+html[data-theme="dark"] .topbar-title span,html[data-theme="dark"] label,html[data-theme="dark"] .contract-detail-label,html[data-theme="dark"] .contract-detail-value,html[data-theme="dark"] .history-count,html[data-theme="dark"] .history-detail-row,html[data-theme="dark"] .inquiry-field label,html[data-theme="dark"] .inquiry-breadcrumb,html[data-theme="dark"] .auth-subtitle,html[data-theme="dark"] .auth-field label,html[data-theme="dark"] .auth-actions,html[data-theme="dark"] .auth-note,html[data-theme="dark"] .landing-copy{color:#b1c3c6}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{background-color:#142126;color:#e5eff1;border-color:#496066}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#8da3a8}
+html[data-theme="dark"] .history-table th{background:#26383d;color:#d8e7e9}
+html[data-theme="dark"] .history-table td,html[data-theme="dark"] .history-detail-row,html[data-theme="dark"] .contract-detail-row{border-color:#33474c}
+html[data-theme="dark"] .step{color:#a4b8bc}
+html[data-theme="dark"] .step.active{color:#e5eff1}
+html[data-theme="dark"] .step:before{background:#26383d;border-color:#496066}
+html[data-theme="dark"] .notice,html[data-theme="dark"] .summary,html[data-theme="dark"] .history-empty{background:#26383d;color:#c2d4d7;border-color:#40575d}
+html[data-theme="dark"] .history-alert,html[data-theme="dark"] .contract-actions{background:#342a20;color:#f0c58e;border-color:#8b6132}
+html[data-theme="dark"] .history-eye,html[data-theme="dark"] .history-clear,html[data-theme="dark"] .inquiry-search,html[data-theme="dark"] .inquiry-reset,html[data-theme="dark"] .topbar-back,html[data-theme="dark"] .menu-toggle{background:#26383d;color:#9be1e4;border-color:#496066}
+html[data-theme="dark"] .history-eye:hover,html[data-theme="dark"] .history-clear:hover,html[data-theme="dark"] .inquiry-search:hover,html[data-theme="dark"] .inquiry-reset:hover,html[data-theme="dark"] .topbar-back:hover,html[data-theme="dark"] .menu-toggle:hover{background:#30474d}
+html[data-theme="dark"] .topbar-status{background:#1e392d;color:#8ed3a7;border-color:#315b43}
+html[data-theme="dark"] .sidebar-brand{background:#1d2b30;color:#72d2df;border-color:#33474c}
+html[data-theme="dark"] .sidebar-brand:hover{background:#26383d}
+html[data-theme="dark"] .sidebar-brand-business{color:#b1c3c6}
+html[data-theme="dark"] .auth-field input[readonly]{background:#26383d;color:#b1c3c6}
+html[data-theme="dark"] .auth-visual{background:#26383d}
+html[data-theme="dark"] .landing-brandline{color:#72d2df}
+html[data-theme="dark"] .landing-brand .brand-arabic,html[data-theme="dark"] .landing-brand .brand-english{color:#72d2df}
+html[data-theme="dark"] .landing-copy{color:#bdc9cb}
+html[data-theme="dark"] .landing-hero-title,html[data-theme="dark"] .landing-hero-subtitle{color:#72d2df}
+html[data-theme="dark"] .landing-footer{color:#b1c3c6}
+html[data-theme="dark"] .landing-footer a{color:#72d2df}
+html[data-theme="dark"] .vehicle-dialog-close{background:#26383d;color:#c2d4d7}
+html[data-theme="dark"] .loading-overlay{background:#0b171bd9}
+html[data-theme="dark"] .contract-preview,html[data-theme="dark"] .contract-pdf-preview{background:#26383d}
+html[data-theme="dark"] .profile-image-dialog{background:#1d2b30}
+html[data-theme="dark"] .profile-image-fallback{background:#26383d;color:#72d2df}
+html[data-theme="dark"] .account-settings-note,html[data-theme="dark"] .account-settings-form .auth-field input[readonly],html[data-theme="dark"] .contract-file-name{background:#26383d;color:#c2d4d7}
+.theme-toggle{position:fixed;left:20px;bottom:20px;z-index:15;width:48px;height:48px;padding:0;display:grid;place-items:center;border:1px solid #c9d9dc;border-radius:50%;background:#fff;color:#176b76;box-shadow:0 5px 18px #102f352b;cursor:pointer}
+.theme-toggle:hover{background:#effafa;transform:translateY(-2px)}
+.theme-toggle svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme-toggle .sun-icon{display:none}
+html[data-theme="dark"] .theme-toggle{background:#26383d;color:#f7d77b;border-color:#496066}
+html[data-theme="dark"] .theme-toggle:hover{background:#30474d}
+html[data-theme="dark"] .theme-toggle .moon-icon{display:none}
+html[data-theme="dark"] .theme-toggle .sun-icon{display:block}
+@media(max-width:560px){.theme-toggle{left:14px;bottom:14px;width:44px;height:44px}}
 </style>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('tamDemoTheme')==='dark'?'dark':'light'}catch(error){document.documentElement.dataset.theme='light'}</script>
 </head>
 <body class="home-view">
+<button class="theme-toggle" type="button" onclick="toggleColorTheme()" aria-label="تفعيل الوضع الداكن" title="تفعيل الوضع الداكن">
+  <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.2A8.5 8.5 0 0 1 8.8 3.6 8.5 8.5 0 1 0 20.4 15.2Z"/><path d="M16 3v4M14 5h4"/></svg>
+  <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+</button>
 <section class="auth-page" id="loginPage" aria-labelledby="loginTitle">
   <div class="auth-topline"></div>
   <button class="auth-back" type="button" onclick="showLandingPage()">العودة للرئيسية</button>
@@ -546,7 +601,7 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
     </div>
   </div>
   <header class="landing-nav">
-    <div class="landing-logo"><button class="landing-icon-button" type="button" aria-label="عرض الصورة بالحجم الكامل" aria-haspopup="dialog" onclick="showProfileImage()"><img class="landing-logo-mark" src="phot.jpg" alt=""></button><span><span data-i18n="tamm">تم</span><br><small data-i18n="business">أعمال</small></span></div>
+    <div class="landing-logo"><button class="landing-icon-button" type="button" aria-label="عرض الصورة بالحجم الكامل" aria-haspopup="dialog" onclick="showProfileImage()"><img class="landing-logo-mark" src="https://lh3.googleusercontent.com/d/1CPuOJ4z_QdWsR_JX3--KDSNYnKp7aCuV" alt="" onerror="this.hidden=true;this.parentElement.classList.add('landing-icon-fallback')"></button><span><span data-i18n="tamm">تم</span><br><small data-i18n="business">أعمال</small></span></div>
     <nav class="landing-links" aria-label="روابط الموقع">
       <button type="button" data-i18n="changeMobile" onclick="showChangeMobilePage()">تغيير رقم جوال المستخدم</button>
       <button type="button" data-i18n="resetPassword" onclick="showPasswordResetPage()">إعادة تعيين كلمة المرور</button>
@@ -565,7 +620,7 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
   </main>
   <footer class="landing-footer"><span>2025.1.1-32bf394</span><span>|</span><a href="#" data-i18n="forms" onclick="enterTransaction()">نماذج تم</a><span>|</span><a href="#" data-i18n="privacy" onclick="enterTransaction()">إشعار خصوصية البيانات</a><span>|</span><a href="#" data-i18n="faq" onclick="enterTransaction()">الأسئلة الشائعة</a><span>|</span><a href="#" data-i18n="userGuide" onclick="enterTransaction()">دليل الاستخدام</a><span>|</span><strong data-i18n="support">الدعم الفني　920000356</strong></footer>
   <div class="profile-image-modal" id="profileImageModal" role="dialog" aria-modal="true" aria-label="الصورة بالحجم الكامل" aria-hidden="true" onclick="closeProfileImage(event)">
-    <div class="profile-image-dialog"><button class="profile-image-close" type="button" aria-label="إغلاق الصورة" onclick="closeProfileImage()">×</button><img src="phot.jpg" alt="الصورة المكبرة"></div>
+    <div class="profile-image-dialog"><button class="profile-image-close" type="button" aria-label="إغلاق الصورة" onclick="closeProfileImage()">×</button><img src="https://lh3.googleusercontent.com/d/1CPuOJ4z_QdWsR_JX3--KDSNYnKp7aCuV" alt="الصورة المكبرة" onerror="this.hidden=true;this.nextElementSibling.classList.remove('hidden')"><div class="profile-image-fallback hidden" aria-hidden="true">تم</div></div>
   </div>
 </section>
 <div class="app-shell">
@@ -646,14 +701,13 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
   </div>
   <div class="section"><div class="section-title">بيانات المشتري</div>
     <div class="row">
-      <div><label for="buyerType">نوع المشتري</label><select id="buyerType" onchange="updateBuyerFields()"><option value="person">فرد</option><option value="company">شركة</option></select></div>
-      <div><label for="buyerId">رقم الهوية</label><input id="buyerId" type="text"></div>
-      <div><label for="buyerBirth">سنة الميلاد</label><input id="buyerBirth" type="number" placeholder="1995"></div>
+      <div><label>نوع المشتري</label><select id="buyerType" onchange="toggleBuyer()"><option value="person">فرد</option><option value="company">شركة</option></select></div>
+      <div><label>رقم الهوية</label><input id="buyerId" type="text"></div>
+      <div id="buyerBirthWrap"><label for="buyerBirth">سنة الميلاد</label><input id="buyerBirth" type="number" placeholder="1995"></div>
+      <div id="buyerVerificationWrap" class="hidden"><label for="buyerVerificationType">التحقق بواسطة</label><select id="buyerVerificationType" onchange="toggleBuyerVerification()"><option value="iqama">رقم الإقامة</option><option value="license">رخصة السير</option></select></div>
     </div>
-    <div class="row hidden" id="buyerIqamaWrap">
-      <div><label for="buyerIqama">رقم الإقامة</label><input id="buyerIqama" type="text"></div>
-      <div></div><div></div>
-    </div>
+    <div id="buyerIqamaWrap" class="hidden"><label for="buyerIqama">رقم الإقامة</label><input id="buyerIqama" type="text" style="max-width:380px" autocomplete="off"></div>
+    <div id="buyerLicenseWrap" class="hidden"><label for="buyerLicense">رقم رخصة السير</label><input id="buyerLicense" type="text" style="max-width:380px" autocomplete="off"></div>
   </div>
   <div class="section"><div class="section-title">المستخدم الفعلي</div>
     <label><input id="actualUser" type="checkbox" style="width:auto"> هل ترغب في إضافة مستخدم فعلي للمركبة؟</label>
@@ -838,6 +892,19 @@ let pageTransitioning=false;
 let currentUploadedContract=null;
 let currentUploadedContractName='';
 let contractPreviewObjectUrl='';
+function syncColorThemeControl(){
+  const isDark=document.documentElement.dataset.theme==='dark';
+  const action=isDark?'تفعيل الوضع الفاتح':'تفعيل الوضع الداكن';
+  const toggle=document.querySelector('.theme-toggle');
+  if(toggle){toggle.setAttribute('aria-label',action);toggle.title=action;}
+}
+function toggleColorTheme(){
+  const nextTheme=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=nextTheme;
+  try{localStorage.setItem('tamDemoTheme',nextTheme);}catch(error){}
+  syncColorThemeControl();
+}
+syncColorThemeControl();
 const operationsStorageKey='tamVehicleTransferOperations';
 const accountStorageKey='tamDemoAccounts';
 const viewStorageKey='tamDemoCurrentView';
@@ -1190,10 +1257,14 @@ function validateFirstStep(){
   page.querySelectorAll('#page1 .plate-box:not(.buyer-license-box) input').forEach(input=>addRequiredField(input,'أكمل إدخال أحرف وأرقام اللوحة.'));
   addRequiredField(document.getElementById('sellerId'),'أدخل رقم هوية البائع.');
   if(document.getElementById('sellerType').value==='person') addRequiredField(document.getElementById('sellerBirth'),'أدخل سنة ميلاد البائع.');
-  const buyerIsCompany=document.getElementById('buyerType').value==='company';
   addRequiredField(document.getElementById('buyerId'),'أدخل رقم هوية المشتري.');
-  addRequiredField(document.getElementById('buyerBirth'),'أدخل سنة ميلاد المشتري.');
-  if(buyerIsCompany) addRequiredField(document.getElementById('buyerIqama'),'أدخل رقم إقامة المشتري.');
+  if(document.getElementById('buyerType').value==='person'){
+    addRequiredField(document.getElementById('buyerBirth'),'أدخل سنة ميلاد المشتري.');
+  }else if(document.getElementById('buyerVerificationType').value==='iqama'){
+    addRequiredField(document.getElementById('buyerIqama'),'أدخل رقم إقامة المشتري.');
+  }else{
+    addRequiredField(document.getElementById('buyerLicense'),'أدخل رقم رخصة سير المشتري.');
+  }
   const missing=requiredFields.find(({field})=>!field.value.trim());
   if(!missing) return true;
   missing.field.setCustomValidity(missing.message);
@@ -1541,7 +1612,7 @@ function startNewTransaction(){
   document.getElementById('contractFileName').classList.add('hidden');
   updateContractSummary();
   document.getElementById('sellerBirthWrap').classList.toggle('hidden',document.getElementById('sellerType').value==='company');
-  updateBuyerFields();
+  toggleBuyer();
   returnToTransaction();
   currentPage=1;
   showPage(1);
@@ -1723,7 +1794,7 @@ function moveInquiryPlateNext(el){
   if(nextInput) nextInput.focus();
 }
 function attachSegmentedInputBehavior(){
-  document.querySelectorAll('.plate-box input, .inquiry-plate input, .code-boxes input, .buyer-license-box input').forEach(input=>{
+  document.querySelectorAll('.plate-box input, .inquiry-plate input, .code-boxes input').forEach(input=>{
     input.removeEventListener('keydown',handleSegmentedBackspace);
     input.addEventListener('keydown',handleSegmentedBackspace);
   });
@@ -1739,11 +1810,26 @@ function toggleSeller(){
   const type=document.getElementById('sellerType').value;
   document.getElementById('sellerBirthWrap').classList.toggle('hidden',type==='company');
 }
-function updateBuyerFields(){
-  const company=document.getElementById('buyerType').value==='company';
-  document.getElementById('buyerIqamaWrap').classList.toggle('hidden',!company);
+function toggleBuyer(){
+  const type=document.getElementById('buyerType').value;
+  const isCompany=type==='company';
+  document.getElementById('buyerBirthWrap').classList.toggle('hidden',isCompany);
+  document.getElementById('buyerVerificationWrap').classList.toggle('hidden',!isCompany);
+  if(!isCompany){
+    document.getElementById('buyerIqama').value='';
+    document.getElementById('buyerLicense').value='';
+  }
+  toggleBuyerVerification();
 }
-toggleSeller();updateBuyerFields();
+function toggleBuyerVerification(){
+  const isCompany=document.getElementById('buyerType').value==='company';
+  const method=document.getElementById('buyerVerificationType').value;
+  document.getElementById('buyerIqamaWrap').classList.toggle('hidden',!isCompany||method!=='iqama');
+  document.getElementById('buyerLicenseWrap').classList.toggle('hidden',!isCompany||method!=='license');
+  if(method==='iqama') document.getElementById('buyerLicense').value='';
+  else document.getElementById('buyerIqama').value='';
+}
+toggleSeller();toggleBuyer();
 attachSegmentedInputBehavior();
 const siteSidebar=document.getElementById('siteSidebar');
 const menuToggle=document.getElementById('menuToggle');
