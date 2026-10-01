@@ -643,24 +643,17 @@ body.login-view #loginPage,body.signup-view #signupPage,body.reset-view #resetPa
       <div><label>رقم الهوية</label><input id="sellerId" type="text"></div>
       <div id="sellerBirthWrap"><label>سنة الميلاد</label><input id="sellerBirth" type="number" placeholder="1995"></div>
     </div>
-    <div id="sellerIqama" class="hidden"><label>رقم الإقامة</label><input id="sellerIqamaInput" type="text" style="max-width:380px"></div>
   </div>
   <div class="section"><div class="section-title">بيانات المشتري</div>
     <div class="row">
-      <div><label>نوع المشتري</label><select id="buyerType"><option value="person">فرد</option><option value="company">شركة</option></select></div>
-      <div><label>رقم الهوية</label><input id="buyerId" type="text"></div>
-      <div><label for="buyerVerificationMethod">التحقق بواسطة</label><select id="buyerVerificationMethod" onchange="updateBuyerVerificationLabel()"><option value="iqama">رقم الإقامة</option><option value="license">رخصة السير</option></select></div>
+      <div><label for="buyerType">نوع المشتري</label><select id="buyerType" onchange="updateBuyerFields()"><option value="person">فرد</option><option value="company">شركة</option></select></div>
+      <div><label for="buyerId">رقم الهوية</label><input id="buyerId" type="text"></div>
+      <div><label for="buyerBirth">سنة الميلاد</label><input id="buyerBirth" type="number" placeholder="1995"></div>
     </div>
-    <div id="buyerVerificationSingleField"><label id="buyerVerificationLabel" for="buyerVerificationValue">رقم الإقامة</label><input id="buyerVerificationValue" type="text" style="max-width:380px" autocomplete="off"></div>
-    <div id="buyerLicenseField" class="hidden"><label>رقم رخصة السير</label><div class="plate-box buyer-license-box" dir="rtl" aria-label="رقم رخصة السير من سبعة أرقام">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 1" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 2" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 3" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 4" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 5" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 6" oninput="moveBuyerLicenseNext(this)">
-      <input inputmode="numeric" maxlength="1" aria-label="رقم رخصة السير 7" oninput="moveBuyerLicenseNext(this)">
-    </div></div>
+    <div class="row hidden" id="buyerIqamaWrap">
+      <div><label for="buyerIqama">رقم الإقامة</label><input id="buyerIqama" type="text"></div>
+      <div></div><div></div>
+    </div>
   </div>
   <div class="section"><div class="section-title">المستخدم الفعلي</div>
     <label><input id="actualUser" type="checkbox" style="width:auto"> هل ترغب في إضافة مستخدم فعلي للمركبة؟</label>
@@ -1197,12 +1190,10 @@ function validateFirstStep(){
   page.querySelectorAll('#page1 .plate-box:not(.buyer-license-box) input').forEach(input=>addRequiredField(input,'أكمل إدخال أحرف وأرقام اللوحة.'));
   addRequiredField(document.getElementById('sellerId'),'أدخل رقم هوية البائع.');
   if(document.getElementById('sellerType').value==='person') addRequiredField(document.getElementById('sellerBirth'),'أدخل سنة ميلاد البائع.');
+  const buyerIsCompany=document.getElementById('buyerType').value==='company';
   addRequiredField(document.getElementById('buyerId'),'أدخل رقم هوية المشتري.');
-  if(document.getElementById('buyerVerificationMethod').value==='iqama'){
-    addRequiredField(document.getElementById('buyerVerificationValue'),'أدخل رقم الإقامة للتحقق.');
-  }else{
-    page.querySelectorAll('#buyerLicenseField input').forEach(input=>addRequiredField(input,'أكمل رقم رخصة السير المكوّن من سبعة أرقام.'));
-  }
+  addRequiredField(document.getElementById('buyerBirth'),'أدخل سنة ميلاد المشتري.');
+  if(buyerIsCompany) addRequiredField(document.getElementById('buyerIqama'),'أدخل رقم إقامة المشتري.');
   const missing=requiredFields.find(({field})=>!field.value.trim());
   if(!missing) return true;
   missing.field.setCustomValidity(missing.message);
@@ -1550,7 +1541,7 @@ function startNewTransaction(){
   document.getElementById('contractFileName').classList.add('hidden');
   updateContractSummary();
   document.getElementById('sellerBirthWrap').classList.toggle('hidden',document.getElementById('sellerType').value==='company');
-  updateBuyerVerificationLabel();
+  updateBuyerFields();
   returnToTransaction();
   currentPage=1;
   showPage(1);
@@ -1747,24 +1738,12 @@ function normalizeMobile(el){
 function toggleSeller(){
   const type=document.getElementById('sellerType').value;
   document.getElementById('sellerBirthWrap').classList.toggle('hidden',type==='company');
-  document.getElementById('sellerIqama').classList.add('hidden');
 }
-function updateBuyerVerificationLabel(){
-  const method=document.getElementById('buyerVerificationMethod').value;
-  const label=document.getElementById('buyerVerificationLabel');
-  const license=method==='license';
-  label.textContent='رقم الإقامة';
-  document.getElementById('buyerVerificationSingleField').classList.toggle('hidden',license);
-  document.getElementById('buyerLicenseField').classList.toggle('hidden',!license);
+function updateBuyerFields(){
+  const company=document.getElementById('buyerType').value==='company';
+  document.getElementById('buyerIqamaWrap').classList.toggle('hidden',!company);
 }
-function moveBuyerLicenseNext(input){
-  input.value=input.value.replace(/[٠-٩۰-۹]/g,d=>String.fromCharCode(d.charCodeAt(0)-(d>='٠'&&d<='٩'?0x0660:0x06f0)+48)).replace(/\D/g,'').slice(-1);
-  if(!input.value) return;
-  const fields=[...document.querySelectorAll('.buyer-license-box input')];
-  const next=fields[fields.indexOf(input)+1];
-  if(next) next.focus();
-}
-toggleSeller();updateBuyerVerificationLabel();
+toggleSeller();updateBuyerFields();
 attachSegmentedInputBehavior();
 const siteSidebar=document.getElementById('siteSidebar');
 const menuToggle=document.getElementById('menuToggle');
